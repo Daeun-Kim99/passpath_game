@@ -28,13 +28,19 @@ double deviceHeight = 0;
 class _MyGamePageState extends State<MyGamePage> {
   @override
   Widget build(BuildContext context) {
-    deviceWidth = 400*(MediaQuery.of(context).size.width/500);
-    deviceHeight = 400*(MediaQuery.of(context).size.height/800);
+    deviceWidth = 400 * (MediaQuery
+        .of(context)
+        .size
+        .width / 500);
+    deviceHeight = 400 * (MediaQuery
+        .of(context)
+        .size
+        .height / 800);
     return Scaffold(
-        //appBar: AppBar(),
+        appBar: AppBar(),
         body: Center(
           child: Container(
-            width: deviceWidth, height: deviceHeight,//Canvas크기 정하기
+            width: deviceWidth, height: deviceHeight, //Canvas크기 정하기
             child: CustomPaint(painter: GameStage(),),
           ),
         ),
@@ -43,8 +49,8 @@ class _MyGamePageState extends State<MyGamePage> {
   }
 }
 
-double _column = 4, _row = 4; //행과 열 개수
-List xList = [], yList = [];
+double _stageColumn = 4, _stageRow = 4; //행과 열 개수
+List stageXList = [], stageYList = [];
 
 class GameStage extends CustomPainter {
   @override
@@ -55,18 +61,18 @@ class GameStage extends CustomPainter {
       myPaint.color = Colors.black; //사각형 색? 테두리는 어케 바꾸는지 아직 몰으겠어연
       myPaint.style = PaintingStyle.stroke;
       myPaint.strokeWidth = 2;
-      double X = 0, Y = 0; //사각형의 좌표
-      double width = deviceWidth / _column; //canvas크기에 열 개수만큼 나눠서 박스 크기구하기
-      double height = deviceHeight / _row;
-      for (int i = 0; i < _row; i++) { //행
-        for (int j = 0; j < _column; j++) { //열
-          canvas.drawRect(Offset(X, Y) & Size(width, height), myPaint); //사각형 그리기
-          xList.add(X);
-          yList.add(Y);
-          X += width; //2열에 사각형 그리기
+      double stageX = 0, stageY = 0; //사각형의 좌표
+      double width = deviceWidth / _stageColumn; //canvas크기에 열 개수만큼 나눠서 박스 크기구하기
+      double height = deviceHeight / _stageRow;
+      for (int i = 0; i < _stageRow; i++) { //행
+        for (int j = 0; j < _stageColumn; j++) { //열
+          canvas.drawRect(Offset(stageX, stageY) & Size(width, height), myPaint); //사각형 그리기
+          stageXList.add(stageX);
+          stageYList.add(stageY);
+          stageX += width; //2열에 사각형 그리기
         }
-        Y += height ; //2행에 사각형 그리기
-        X = 0; //2행으로 넘어갔을때 x좌표 초기화
+        stageY += height ; //2행에 사각형 그리기
+        stageX = 0; //2행으로 넘어갔을때 x좌표 초기화
       }
     } catch (e) {
       print(e.toString());
